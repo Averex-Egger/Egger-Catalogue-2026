@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Explore and download the EGGER Catalogue 26+ from Averex, official distributor in Kosovo."
+    content="Explore and download the EGGER Catalogue 26+ from Averex."
   />
 
   <link rel="stylesheet" href="styles.css" />
@@ -17,14 +17,19 @@
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <div class="brand brand-egger">
-        <span class="egger-mark"></span>
-        <span class="egger-name">EGGER</span>
-      </div>
+      <img
+        src="Egger Logo.gif"
+        alt="EGGER Logo"
+        class="logo egger-logo"
+      />
 
-      <div class="brand brand-averex">
-        AVEREX
-      </div>
+      <div class="logo-divider" aria-hidden="true"></div>
+
+      <img
+        src="Averex Logo.png"
+        alt="Averex Logo"
+        class="logo averex-logo"
+      />
     </div>
   </header>
 
@@ -37,14 +42,11 @@
 
         <p class="intro">
           Explore the latest EGGER decorative collection, discover new
-          surfaces and download the complete catalogue.
+          surfaces, textures and designs, and download the complete catalogue.
         </p>
 
         <div class="actions">
-          <a
-            class="button button-primary"
-            href="#catalogue"
-          >
+          <a class="button button-primary" href="#catalogue">
             View Catalogue
           </a>
 
@@ -69,13 +71,17 @@
         <iframe
           class="pdf-viewer"
           src="Egger%20Catalogue%2026%2B.pdf"
-          title="EGGER Catalogue 26+ PDF"
+          title="EGGER Catalogue 26+"
         ></iframe>
       </div>
 
-      <p class="mobile-download">
+      <p class="pdf-fallback">
         If the catalogue does not appear on your device,
-        <a href="Egger%20Catalogue%2026%2B.pdf" target="_blank">
+        <a
+          href="Egger%20Catalogue%2026%2B.pdf"
+          target="_blank"
+          rel="noopener"
+        >
           open the PDF here
         </a>.
       </p>
@@ -83,7 +89,7 @@
   </main>
 
   <footer class="site-footer">
-    <p>Official distributor in Kosovo</p>
+    <p>Official EGGER distributor in Kosovo</p>
     <strong>Averex Sh.p.k</strong>
     <span>© 2026 Averex Sh.p.k</span>
   </footer>
