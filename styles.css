@@ -1,13 +1,13 @@
 :root {
   --egger-red: #e30613;
-  --egger-red-dark: #bd0010;
+  --egger-red-dark: #b9000d;
   --averex-green: #18833e;
   --text-dark: #1d1d1f;
-  --text-soft: #6f7378;
+  --text-soft: #6d7177;
   --background: #f4f5f3;
   --surface: #ffffff;
   --border: #dedfda;
-  --shadow: 0 18px 50px rgba(0, 0, 0, 0.1);
+  --shadow: 0 20px 55px rgba(0, 0, 0, 0.11);
 }
 
 * {
@@ -31,69 +31,68 @@ a {
 }
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   width: 100%;
   background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 10;
   backdrop-filter: blur(14px);
 }
 
 .header-inner {
   width: min(1180px, calc(100% - 40px));
-  min-height: 82px;
+  min-height: 94px;
   margin: 0 auto;
+  padding: 16px 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 30px;
+  justify-content: center;
+  gap: 34px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+.logo {
+  display: block;
+  width: auto;
+  object-fit: contain;
 }
 
-.brand-egger {
-  gap: 12px;
-  font-size: 1.45rem;
+.egger-logo {
+  height: 42px;
 }
 
-.egger-mark {
-  width: 14px;
-  height: 36px;
-  display: inline-block;
-  background: var(--egger-red);
-  border-radius: 2px;
+.averex-logo {
+  height: 58px;
 }
 
-.egger-name {
-  color: #171717;
-}
-
-.brand-averex {
-  color: var(--averex-green);
-  font-size: 1.2rem;
-  letter-spacing: 0.12em;
+.logo-divider {
+  width: 1px;
+  height: 42px;
+  background: var(--border);
 }
 
 .hero {
-  min-height: 520px;
-  padding: 100px 20px 80px;
+  min-height: 560px;
+  padding: 110px 20px 90px;
   display: grid;
   place-items: center;
   text-align: center;
   background:
-    radial-gradient(circle at top left, rgba(227, 6, 19, 0.09), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(24, 131, 62, 0.08), transparent 32%),
+    radial-gradient(
+      circle at top left,
+      rgba(227, 6, 19, 0.09),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(24, 131, 62, 0.08),
+      transparent 32%
+    ),
     linear-gradient(180deg, #ffffff 0%, #f4f5f3 100%);
 }
 
 .hero-content {
-  width: min(820px, 100%);
+  width: min(850px, 100%);
 }
 
 .eyebrow {
@@ -108,17 +107,17 @@ a {
 h1,
 h2 {
   margin-top: 0;
-  line-height: 1.1;
+  line-height: 1.08;
 }
 
 h1 {
   margin-bottom: 22px;
-  font-size: clamp(2.7rem, 7vw, 5.6rem);
+  font-size: clamp(2.8rem, 7vw, 5.7rem);
   letter-spacing: -0.055em;
 }
 
 .intro {
-  max-width: 680px;
+  max-width: 700px;
   margin: 0 auto;
   color: var(--text-soft);
   font-size: clamp(1rem, 2vw, 1.2rem);
@@ -133,8 +132,8 @@ h1 {
 }
 
 .button {
-  min-width: 180px;
-  padding: 15px 25px;
+  min-width: 185px;
+  padding: 15px 26px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -156,7 +155,7 @@ h1 {
 .button-primary {
   color: #ffffff;
   background: var(--egger-red);
-  box-shadow: 0 10px 25px rgba(227, 6, 19, 0.23);
+  box-shadow: 0 10px 25px rgba(227, 6, 19, 0.22);
 }
 
 .button-primary:hover {
@@ -187,7 +186,7 @@ h1 {
 
 .section-heading h2 {
   margin-bottom: 0;
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: clamp(2rem, 4vw, 3.5rem);
   letter-spacing: -0.04em;
 }
 
@@ -208,14 +207,14 @@ h1 {
   background: #d9d9d9;
 }
 
-.mobile-download {
+.pdf-fallback {
   margin: 22px 0 0;
   color: var(--text-soft);
   text-align: center;
   font-size: 0.95rem;
 }
 
-.mobile-download a {
+.pdf-fallback a {
   color: var(--egger-red);
   font-weight: 800;
 }
@@ -251,20 +250,20 @@ h1 {
 @media (max-width: 720px) {
   .header-inner {
     width: min(100% - 28px, 1180px);
-    min-height: 70px;
+    min-height: 78px;
+    gap: 20px;
   }
 
-  .brand-egger {
-    font-size: 1.15rem;
+  .egger-logo {
+    height: 32px;
   }
 
-  .brand-averex {
-    font-size: 0.95rem;
+  .averex-logo {
+    height: 44px;
   }
 
-  .egger-mark {
-    width: 11px;
-    height: 29px;
+  .logo-divider {
+    height: 34px;
   }
 
   .hero {
@@ -304,9 +303,16 @@ h1 {
     gap: 14px;
   }
 
-  .brand-averex {
-    font-size: 0.82rem;
-    letter-spacing: 0.08em;
+  .egger-logo {
+    height: 27px;
+  }
+
+  .averex-logo {
+    height: 38px;
+  }
+
+  .logo-divider {
+    height: 30px;
   }
 
   .pdf-viewer {
