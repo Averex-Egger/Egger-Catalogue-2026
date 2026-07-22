@@ -67,7 +67,7 @@ a {
 
 .logo-divider {
   width: 1px;
-  height: 42px;
+  height: 60px;
   background: var(--border);
 }
 
@@ -88,7 +88,11 @@ a {
       rgba(24, 131, 62, 0.08),
       transparent 32%
     ),
-    linear-gradient(180deg, #ffffff 0%, #f4f5f3 100%);
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f4f5f3 100%
+    );
 }
 
 .hero-content {
@@ -138,6 +142,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   border: 1px solid transparent;
   border-radius: 8px;
   font-weight: 800;
@@ -153,23 +158,35 @@ h1 {
   transform: translateY(-2px);
 }
 
-.button-primary {
+.button-download {
+  min-width: 245px;
   color: #ffffff;
   background: var(--egger-red);
-  box-shadow: 0 10px 25px rgba(227, 6, 19, 0.22);
+  border-color: var(--egger-red);
+  box-shadow: 0 14px 30px rgba(227, 6, 19, 0.28);
 }
 
-.button-primary:hover {
+.button-download:hover {
   background: var(--egger-red-dark);
+  border-color: var(--egger-red-dark);
+  box-shadow: 0 18px 36px rgba(227, 6, 19, 0.34);
+  transform: translateY(-3px);
 }
 
-.button-secondary {
+.download-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.button-view {
+  min-width: 185px;
   color: var(--text-dark);
   background: #ffffff;
   border-color: var(--border);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
 }
 
-.button-secondary:hover {
+.button-view:hover {
   border-color: var(--averex-green);
   box-shadow: 0 10px 25px rgba(24, 131, 62, 0.12);
 }
