@@ -58,11 +58,11 @@ a {
 }
 
 .egger-logo {
-  height: 90px;
+  height: 130px;
 }
 
 .averex-logo {
-  height: 110px;
+  height: 140px;
 }
 
 .logo-divider {
@@ -112,8 +112,9 @@ h2 {
 
 h1 {
   margin-bottom: 22px;
-  font-size: clamp(2.8rem, 7vw, 5.7rem);
-  letter-spacing: -0.055em;
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
 }
 
 .intro {
