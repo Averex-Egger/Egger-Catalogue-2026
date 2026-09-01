@@ -1,135 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sq">
 <head>
   <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-
-  <title>EGGER Catalogue 26+ | Averex</title>
-
-  <meta
-    name="description"
-    content="Explore and download the EGGER Catalogue 26+ from Averex."
-  />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#183e32" />
+  <title>EGGER 26+ | Një botë dekoresh në Averex</title>
+  <meta name="description" content="Zbuloni Koleksionin Dekorativ EGGER 26+ me Averex. Frymëzim për hapësirën tuaj, katalog interaktiv dhe dekore për projektin e radhës." />
   <link rel="stylesheet" href="styles.css" />
   <script src="download-tracking.js" defer></script>
 </head>
-
 <body>
-
+  <a class="skip-link" href="#main">Kalo te përmbajtja</a>
   <header class="site-header">
-  <div class="header-inner" style="display: flex; justify-content: center;">
-    <img
-      src="Averex Logo.png"
-      alt="Averex Logo"
-      class="logo averex-logo"
-    />
-  </div>
-</header>
-
-  <main>
-
-    <section class="hero">
+    <div class="header-inner">
+      <p class="header-note">Materiale për<br /><strong>ide të mëdha.</strong></p>
+      <a class="brand" href="#" aria-label="Averex — fillimi"><img class="logo averex-logo" src="Averex Logo.png" alt="Averex" width="320" height="320" /></a>
+      <nav aria-label="Navigimi kryesor"><a href="#inspirim">Inspirim</a><a href="#catalogue">Katalogu <span aria-hidden="true">↗</span></a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
       <div class="hero-content">
-
-        <p class="eyebrow">
-          Decorative Collection
-        </p>
-
-        <h1>
-          EGGER Catalogue 26+
-        </h1>
-
-        <p class="intro">
-          Explore the latest EGGER decorative collection,
-          discover new surfaces, textures and designs,
-          and download the complete catalogue.
-        </p>
-
+        <p class="eyebrow"><span class="edition-dot" aria-hidden="true"></span> EGGER · KOLEKSIONI DEKORATIV 26+</p>
+        <h1 id="hero-title">Çdo hapësirë<br />nis me <em>një ide.</em></h1>
+        <p class="intro">Gjeni dekorin që i jep karakter projektit tuaj. Eksploroni ngjyrat, teksturat dhe kombinimet e koleksionit EGGER në Averex.</p>
         <div class="actions">
-
-          <a
-            class="button button-download"
-            href="Egger%20Catalogue%2026%2B.pdf"
-            download
-          >
-            <span class="download-icon" aria-hidden="true">↓</span>
-            Download Catalogue
-          </a>
-
-          <a
-            class="button button-view"
-            href="#catalogue"
-          >
-            View Catalogue
-          </a>
-
+          <a class="button button-download" href="Egger%20Catalogue%2026%2B.pdf" download>Shkarko katalogun <span aria-hidden="true">↓</span></a>
+          <a class="text-link" href="#catalogue">Shfleto online <span aria-hidden="true">↗</span></a>
         </div>
+        <p class="hero-footnote">Për prodhues të mobileve, arkitektë dhe dizajnerë.</p>
+      </div>
+      <figure class="hero-image">
+        <img src="images/kitchen.jpg" alt="Kuzhinë bashkëkohore me fronte në tone të ngrohta dhe ishull me sipërfaqe të zezë me damarë të artë" width="2048" height="1152" fetchpriority="high" />
+        <figcaption><span>FORMË. TEKSTURË. KARAKTER.</span><span>Inspirim nga EGGER</span></figcaption>
+      </figure>
+    </section>
+    <div class="collection-note"><span class="collection-brand">EGGER <strong>26+</strong></span><p>Një koleksion. Shumë mundësi për të krijuar.</p><a href="#udhezime">Si funksionon? <span aria-hidden="true">↓</span></a></div>
 
+    <section class="inspiration section-shell" id="inspirim" aria-labelledby="inspiration-title">
+      <div class="section-heading"><div><p class="eyebrow">NGA DEKORI TE HAPËSIRA</p><h2 id="inspiration-title">Ide që marrin formë.</h2></div><p>Një atmosferë e ngrohtë, një kontrast i guximshëm apo një detaj që bën dallimin. Zbuloni mundësitë.</p></div>
+      <div class="gallery">
+        <figure class="gallery-item">
+          <div class="image-wrap"><img src="images/living-room.jpg" alt="Dhomë ndenjeje me teksturë druri të errët, rafte të rrumbullakosura dhe detaje bezhë" width="1600" height="1600" loading="lazy" /></div>
+          <figcaption><span class="image-number">01 / BANIM</span><h3>Ngrohtësi në çdo detaj.</h3><p>Tekstura druri dhe tone të buta.</p></figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <div class="image-wrap"><img src="images/cafeteria.jpg" alt="Ambient kafeterie me tavolinë të errët me damarë të artë dhe panele me ngjyra të thella" width="1600" height="1600" loading="lazy" /></div>
+          <figcaption><span class="image-number">02 / MIKPRITJE</span><h3>Kontraste me karakter.</h3><p>Ngjyra që i japin identitet ambientit.</p></figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <div class="image-wrap"><img src="images/shop.jpg" alt="Interier dyqani me panele druri të çelët, mobilie gri dhe forma gjeometrike" width="1888" height="1334" loading="lazy" /></div>
+          <figcaption><span class="image-number">03 / HAPËSIRA KOMERCIALE</span><h3>Hapësirë për kreativitet.</h3><p>Materiale që plotësojnë vizionin tuaj.</p></figcaption>
+        </figure>
+      </div>
+      <p class="image-credit">Vizualizimet e ambienteve: EGGER. Për përzgjedhjen e materialeve, ju mirëpresim në Averex.</p>
+    </section>
+
+    <section class="how-to" id="udhezime" aria-labelledby="how-title">
+      <div class="section-shell">
+        <div class="section-heading"><div><p class="eyebrow">MË SHUMË SE NJË KATALOG</p><h2 id="how-title">Provojeni idenë tuaj.<br /><em>Në pak hapa.</em></h2></div><p>Shikoni se si duket dekori në një ambient virtual, përpara se të vendosni.</p></div>
+        <ol class="steps">
+          <li><span class="step-number" aria-hidden="true">01</span><h3>Zgjidhni dekorin.</h3><p>Hapni katalogun dhe klikoni mbi kodin e dekorit që ju pëlqen. Do të hapet faqja e tij në EGGER.</p></li>
+          <li><span class="step-number" aria-hidden="true">02</span><h3>Hapni ambientin virtual.</h3><p>Në faqen e dekorit, zbritni poshtë dhe klikoni <strong>“Design it now”</strong>.</p></li>
+          <li><span class="step-number" aria-hidden="true">03</span><h3>Provoni kombinimet.</h3><p>Klikoni mbi rrathët në ambient, pastaj mbi foton e dekorit për ta aplikuar në sipërfaqen e zgjedhur.</p></li>
+        </ol>
       </div>
     </section>
 
-    <section
-      class="catalogue-section"
-      id="catalogue"
-    >
-
-      <div class="section-heading">
-
-        <p class="eyebrow">
-          Full Catalogue
-        </p>
-
-        <h2>
-          Explore the collection
-        </h2>
-
-      </div>
-
-      <div class="pdf-wrapper">
-
-        <iframe
-          class="pdf-viewer"
-          src="Egger%20Catalogue%2026%2B.pdf"
-          title="EGGER Catalogue 26+"
-        ></iframe>
-
-      </div>
-
-      <p class="pdf-fallback">
-        If the catalogue does not appear on your device,
-        <a
-          href="Egger%20Catalogue%2026%2B.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          open the PDF here
-        </a>.
-      </p>
-
+    <section class="catalogue-section section-shell" id="catalogue" aria-labelledby="catalogue-title">
+      <div class="section-heading"><div><p class="eyebrow">KOLEKSIONI I PLOTË</p><h2 id="catalogue-title">Dekori juaj i radhës<br />mund të jetë këtu.</h2></div><p>Shfletoni katalogun këtu dhe klikoni mbi kodet për të eksploruar dekoret.</p></div>
+      <div class="pdf-wrapper"><div class="pdf-toolbar"><span>EGGER · Decorative Collection 26+</span><span class="pdf-label">KATALOG INTERAKTIV</span></div><iframe class="pdf-viewer" src="Egger%20Catalogue%2026%2B.pdf" title="EGGER Catalogue 26+" loading="lazy"></iframe></div>
+      <p class="pdf-fallback">Katalogu nuk shfaqet në pajisjen tuaj? <a href="Egger%20Catalogue%2026%2B.pdf" target="_blank" rel="noopener noreferrer">Hapeni në një dritare të re <span aria-hidden="true">↗</span></a></p>
     </section>
-
+    <section class="closing section-shell" aria-label="Vizitoni Averex">
+      <p class="eyebrow">NGA EKRANI NË PROJEKTIN TUAJ</p><h2>Shikojini online.<br /><em>Prekini nga afër.</em></h2>
+      <p>Ju mirëpresim në showroom-in e Averex për t’i parë ngjyrat dhe teksturat nga afër dhe për të diskutuar përzgjedhjen për projektin tuaj.</p>
+      <a class="text-link" href="#main">Kthehu te koleksioni <span aria-hidden="true">↑</span></a>
+    </section>
   </main>
-
-  <footer class="site-footer">
-
-    <p>
-      Official EGGER distributor in Kosovo
-    </p>
-
-    <strong>
-      Averex Sh.p.k
-    </strong>
-
-    <span>
-      © 2026 Averex Sh.p.k
-    </span>
-
-  </footer>
-
+  <footer class="site-footer"><strong>Averex Sh.p.k</strong><p>Distributor i EGGER në Kosovë</p><span>© 2026 Averex · Imazhet e ambienteve: EGGER</span></footer>
 </body>
 </html>

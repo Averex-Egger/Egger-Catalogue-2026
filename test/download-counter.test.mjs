@@ -173,3 +173,18 @@ test("page contains one tracker and all PDF links reference the existing file", 
     await access(new URL(`../${decodeURIComponent(href)}`, import.meta.url));
   }
 });
+
+test("redesign preserves the download button and has valid images and section links", async () => {
+  const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  assert.equal((html.match(/class="button button-download"/g) || []).length, 1);
+  assert.match(html, /<html lang="sq">/);
+  const images = [...html.matchAll(/<img\s[^>]*src="([^"]+)"[^>]*>/g)];
+  assert.equal(images.length, 5);
+  for (const [tag, src] of images) {
+    assert.match(tag, /alt="[^"]+"/);
+    await access(new URL(`../${src}`, import.meta.url));
+  }
+  for (const [, anchor] of html.matchAll(/href="#([^"]+)"/g)) {
+    assert.ok(html.includes(`id="${anchor}"`), `Missing section: ${anchor}`);
+  }
+});
