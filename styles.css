@@ -48,27 +48,17 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 34px;
 }
 
 .logo {
   display: block;
   width: auto;
+  max-width: 100%;
   object-fit: contain;
 }
 
-.egger-logo {
-  height: 400px;
-}
-
 .averex-logo {
-  height: 390px;
-}
-
-.logo-divider {
-  width: 1px;
-  height: 60px;
-  background: var(--border);
+  height: 180px;
 }
 
 .hero {
@@ -267,21 +257,12 @@ h1 {
 
 @media (max-width: 720px) {
   .header-inner {
-    width: min(100% - 28px, 1180px);
+    width: min(1180px, calc(100% - 28px));
     min-height: 78px;
-    gap: 20px;
-  }
-
-  .egger-logo {
-    height: 32px;
   }
 
   .averex-logo {
-    height: 44px;
-  }
-
-  .logo-divider {
-    height: 34px;
+    height: 150px;
   }
 
   .hero {
@@ -302,7 +283,7 @@ h1 {
   }
 
   .catalogue-section {
-    width: min(100% - 20px, 1240px);
+    width: min(1240px, calc(100% - 20px));
     padding: 62px 0;
   }
 
@@ -317,22 +298,6 @@ h1 {
 }
 
 @media (max-width: 480px) {
-  .header-inner {
-    gap: 14px;
-  }
-
-  .egger-logo {
-    height: 27px;
-  }
-
-  .averex-logo {
-    height: 38px;
-  }
-
-  .logo-divider {
-    height: 30px;
-  }
-
   .pdf-viewer {
     min-height: 500px;
   }
