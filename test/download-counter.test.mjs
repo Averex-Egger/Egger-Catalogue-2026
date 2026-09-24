@@ -4,7 +4,7 @@ import { readFile, access } from "node:fs/promises";
 import vm from "node:vm";
 import { createHandler, incrementCounter, COUNTER_KEY } from "../lib/download-counter.mjs";
 
-const origin = "https://eggercatalogue2026.netlify.app";
+const origin = "https://averex.netlify.app";
 
 function memoryStore() {
   let value = null;
