@@ -8,3 +8,10 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# Keep previously shared catalogue links working after the PDF rename.
+[[redirects]]
+  from = "/Egger%20Catalogue%2026%2B.pdf"
+  to = "/Averex%20Catalogue%202026.pdf"
+  status = 301
+  force = true

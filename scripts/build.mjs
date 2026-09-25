@@ -7,7 +7,7 @@ for (const file of [
   "styles.css",
   "download-tracking.js",
   "Averex Logo.png",
-  "Egger Catalogue 26+.pdf",
+  "Averex Catalogue 2026.pdf",
 ]) {
   await copyFile(file, `dist/${file}`);
 }

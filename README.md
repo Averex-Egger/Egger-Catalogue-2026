@@ -1,5 +1,11 @@
 # Averex EGGER catalogue
 
+The catalogue PDF is `Averex Catalogue 2026.pdf`. The download button, embedded
+viewer and fallback link use this file. Netlify redirects the previous
+`Egger Catalogue 26+.pdf` address to the new one so saved links still work.
+The click counter follows the download button, not the PDF filename; renaming
+the file preserves the existing `catalogue-downloads` / `total.json` total.
+
 ## Private download-click total
 
 Only activation of **Download Catalogue** is counted. Page views, the embedded
