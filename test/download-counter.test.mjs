@@ -2,31 +2,34 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile, access } from "node:fs/promises";
 import vm from "node:vm";
-import { createHandler, incrementCounter, COUNTER_KEY } from "../lib/download-counter.mjs";
+import { createHandler, incrementCounter, COUNTER_KEY, CLEAF_COUNTER_KEY } from "../lib/download-counter.mjs";
 
 const origin = "https://averex.netlify.app";
 
 function memoryStore() {
-  let value = null;
-  let version = 0;
+  const values = new Map();
+  const versions = new Map();
   return {
     async getWithMetadata(key, options) {
-      assert.equal(key, COUNTER_KEY);
+      assert.ok([COUNTER_KEY, CLEAF_COUNTER_KEY].includes(key));
       assert.equal(options.consistency, "strong");
-      return value ? { data: structuredClone(value), etag: String(version) } : null;
+      const value = values.get(key);
+      return value ? { data: structuredClone(value), etag: String(versions.get(key)) } : null;
     },
     async setJSON(key, data, options) {
-      assert.equal(key, COUNTER_KEY);
+      assert.ok([COUNTER_KEY, CLEAF_COUNTER_KEY].includes(key));
+      const value = values.get(key);
+      const version = versions.get(key) ?? 0;
       if ((options.onlyIfNew && value) ||
           (options.onlyIfMatch !== undefined && options.onlyIfMatch !== String(version))) {
         return { modified: false };
       }
       assert.equal(options.metadata.total, data.total);
-      value = structuredClone(data);
-      version += 1;
-      return { modified: true, etag: String(version) };
+      values.set(key, structuredClone(data));
+      versions.set(key, version + 1);
+      return { modified: true, etag: String(version + 1) };
     },
-    read() { return value; },
+    read(key = COUNTER_KEY) { return values.get(key) ?? null; },
   };
 }
 
@@ -119,56 +122,85 @@ test("compare-and-swap conflicts retry without unconditional writes", async () =
   assert.equal(attempts, 3);
 });
 
-test("frontend only counts download clicks and never interferes with navigation", async () => {
+test("CLEAF increments independently while existing EGGER count is preserved", async () => {
+  const store = memoryStore();
+  const handler = createHandler(() => store);
+  for (let i = 0; i < 3; i++) {
+    assert.equal((await handler(request())).status, 204);
+  }
+  const startedAt = store.read(COUNTER_KEY).startedAt;
+  assert.equal((await handler(request({ body: "download:cleaf" })).status, 204);
+  assert.equal((await handler(request({ body: "download:cleaf" })).status, 204);
+  assert.equal(store.read(COUNTER_KEY).total, 3);
+  assert.equal(store.read(COUNTER_KEY).startedAt, startedAt);
+  assert.equal(store.read(CLEAF_COUNTER_KEY).total, 2);
+  assert.equal((await handler(request({ body: "download:egger" })).status, 204);
+  assert.equal(store.read(COUNTER_KEY).total, 4);
+  assert.equal(store.read(CLEAF_COUNTER_KEY).total, 2);
+});
+
+test("frontend independently counts both catalogue downloads without stopping navigation", async () => {
   const source = await readFile(new URL("../download-tracking.js", import.meta.url), "utf8");
-  let onClick;
   let clock = 1000;
+  const handlers = {};
   const calls = [];
+  const buttons = ["egger", "cleaf"].map((catalogue) => ({
+    dataset: { catalogue },
+    addEventListener(event, handler) {
+      assert.equal(event, "click");
+      handlers[catalogue] = handler;
+    },
+  }));
   vm.runInNewContext(source, {
     document: {
-      querySelector(selector) {
+      querySelectorAll(selector) {
         assert.equal(selector, ".button-download");
-        return { addEventListener(event, handler) {
-          assert.equal(event, "click");
-          onClick = handler;
-        } };
+        return buttons;
       },
     },
     Date: { now: () => clock },
     fetch: (...args) => { calls.push(args); return Promise.reject(new Error("offline")); },
   });
   assert.equal(calls.length, 0);
-  assert.doesNotThrow(() => onClick());
-  onClick();
-  assert.equal(calls.length, 1);
-  clock += 1100;
-  onClick();
+  assert.doesNotThrow(() => handlers.egger());
+  assert.doesNotThrow(() => handlers.cleaf());
+  handlers.egger();
+  handlers.cleaf();
   assert.equal(calls.length, 2);
-  assert.equal(calls[0][0], "/.netlify/functions/track-download");
   assert.equal(calls[0][1].body, "download");
-  assert.equal(calls[0][1].keepalive, true);
-  assert.equal(calls[0][1].credentials, "omit");
-  assert.equal(calls[0][1].referrerPolicy, "no-referrer");
+  assert.equal(calls[1][1].body, "download:cleaf");
+  clock += 1100;
+  handlers.cleaf();
+  assert.equal(calls.length, 3);
+  for (const [url, options] of calls) {
+    assert.equal(url, "/.netlify/functions/track-download");
+    assert.equal(options.keepalive, true);
+    assert.equal(options.credentials, "omit");
+    assert.equal(options.referrerPolicy, "no-referrer");
+  }
   await new Promise((resolve) => setImmediate(resolve));
 });
 
 test("frontend tolerates missing buttons and unavailable fetch", async () => {
   const source = await readFile(new URL("../download-tracking.js", import.meta.url), "utf8");
   assert.doesNotThrow(() => vm.runInNewContext(source, {
-    document: { querySelector: () => null },
+    document: { querySelectorAll: () => [] },
   }));
   let click;
   vm.runInNewContext(source, {
-    document: { querySelector: () => ({ addEventListener: (_event, fn) => { click = fn; } }) },
+    document: { querySelectorAll: () => [{
+      dataset: { catalogue: "cleaf" },
+      addEventListener: (_event, fn) => { click = fn; },
+    }] },
   });
   assert.doesNotThrow(() => click());
 });
 
-test("page contains one tracker and all PDF links reference the existing file", async () => {
+test("page contains one tracker and both PDFs have valid download links", async () => {
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
   assert.equal((html.match(/src="download-tracking\.js"/g) || []).length, 1);
   const links = [...html.matchAll(/(?:href|src)="([^"]+\.pdf)"/g)];
-  assert.equal(links.length, 3);
+  assert.equal(links.length, 4);
   for (const [, href] of links) {
     await access(new URL(`../${decodeURIComponent(href)}`, import.meta.url));
   }
@@ -176,7 +208,9 @@ test("page contains one tracker and all PDF links reference the existing file", 
 
 test("redesign preserves the download button and has valid images and section links", async () => {
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
-  assert.equal((html.match(/class="button button-download"/g) || []).length, 1);
+  assert.equal((html.match(/class="button button-download/g) || []).length, 2);
+  assert.match(html, /data-catalogue="egger"/);
+  assert.match(html, /data-catalogue="cleaf"/);
   assert.match(html, /<html lang="sq">/);
   const images = [...html.matchAll(/<img\s[^>]*src="([^"]+)"[^>]*>/g)];
   assert.equal(images.length, 5);
@@ -187,4 +221,12 @@ test("redesign preserves the download button and has valid images and section li
   for (const [, anchor] of html.matchAll(/href="#([^"]+)"/g)) {
     assert.ok(html.includes(`id="${anchor}"`), `Missing section: ${anchor}`);
   }
+});
+
+test("build publishes both actual catalogue PDFs", async () => {
+  const build = await readFile(new URL("../scripts/build.mjs", import.meta.url), "utf8");
+  assert.match(build, /Averex Catalogue 2026\\.pdf/);
+  assert.match(build, /CLEAF Catalogue\\.pdf/);
+  await access(new URL("../Averex Catalogue 2026.pdf", import.meta.url));
+  await access(new URL("../CLEAF Catalogue.pdf", import.meta.url));
 });
