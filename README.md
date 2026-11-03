@@ -1,54 +1,38 @@
-# Averex EGGER catalogue
+# Averex catalogues — EGGER and CLEAF
 
-The catalogue PDF is `Averex Catalogue 2026.pdf`. The download button, embedded
-viewer and fallback link use this file. Netlify redirects the previous
-`Egger Catalogue 26+.pdf` address to the new one so saved links still work.
-The click counter follows the download button, not the PDF filename; renaming
-the file preserves the existing `catalogue-downloads` / `total.json` total.
+The site at https://averex.netlify.app offers separate downloadable PDFs:
+- EGGER: `Averex Catalogue 2026.pdf`
+- CLEAF: `CLEAF Catalogue.pdf`
 
-## Private download-click total
+Both PDFs are copied into the published `dist` folder by `scripts/build.mjs`.
+The existing EGGER embedded PDF viewer and its direct PDF links are unchanged.
 
-Only activation of **Download Catalogue** is counted. Page views, the embedded
-PDF and **View Catalogue** are not counted. The website looks and works as before.
+## Separate private download-click counters
 
-After the first recorded click, sign in to Netlify, open this project, choose
-**Blobs**, open **catalogue-downloads**, then **total.json**. The **total** value
-is the click count; it is also included in that blob's metadata. Download the
-JSON from the Blobs UI if a content preview is unavailable. Before the first
-click the store does not exist and the count is zero. Existing Netlify team
-members with appropriate access can also see it.
+Netlify Blobs store: **`catalogue-downloads`**
+- EGGER: **`total.json`** — existing key is retained, including the existing count.
+- CLEAF: **`cleaf.json`** — new separate count beginning with the first recorded CLEAF click.
 
-There is no public totals or reset API. Counts are stored in site-wide Netlify
-Blobs, not GitHub or the browser, and survive redeploys. No new account or secret
-is required; Netlify supplies storage access to its deployed function.
+From your authenticated Netlify dashboard, open the site, then **Blobs**
+→ **catalogue-downloads** → the respective JSON file. The `total` field
+and metadata show the click count. Neither total is publicly readable.
 
-### What the number means
+Only an activation of the respective download button is counted; page views,
+embedded viewing, direct PDF URLs, and the EGGER viewer fallback link are not
+counted. These are button-click events, not unique visitors or verified saves.
+Accidental same-button double-clicks within one second are ignored.
 
-- Counts start when this implementation is deployed; earlier clicks cannot be recovered.
-- These are recorded button clicks, not unique visitors or confirmed saved files.
-- Downloading through a browser PDF viewer, visiting a direct PDF link, or using
-  "Save link as" is not counted. Normal click/tap/keyboard activation is counted.
-- Repeated activations within one second are ignored as accidental double-clicks.
-- JavaScript/network failures, blockers, rate limits or a storage outage can
-  cause missed events. The PDF download continues regardless.
-- The endpoint validates production origin, method and payload, and Netlify
-  limits it to 20 requests per IP/domain per minute. These controls reduce
-  casual abuse, but do not prove a request came from a real person.
-- Preview deployments do not count. If the production domain changes, update
-  `PRODUCTION_ORIGIN` in `lib/download-counter.mjs`.
+Tracking is best-effort and never blocks a PDF download. JavaScript/network
+failures, blockers, rate limits, storage errors, or a different PDF-handling
+browser may affect observed downloads. The original EGGER event payload
+`download` remains valid; CLEAF sends `download:cleaf`. Both use the same
+existing protected Netlify Function. There is no public read/reset endpoint.
 
-### Privacy and usage
+Only aggregated counts and timestamps are stored by this application.
+No form, cookies, names, emails, or browsing histories are introduced. Netlify
+still processes requests and applies its own infrastructure logs/rate limits.
 
-The application stores only an aggregate total and its start/update timestamps.
-It does not set cookies or store IP addresses, names, emails or browsing histories.
-Netlify still processes requests and applies its own infrastructure logging and
-rate limiting. Review your site's privacy disclosures as appropriate.
-
-Function executions and Blobs reads/writes use the existing Netlify plan's
-allowances and may incur usage charges. This change does not purchase or upgrade
-a plan. Monitor usage in Netlify.
-
-## Development and deployment
+## Development
 
 Use Node.js 22 or newer:
 
@@ -58,10 +42,8 @@ npm test
 npm run build
 ```
 
-Netlify runs the tests/build, publishes the allowlisted assets in `dist`, and
-bundles `netlify/functions/track-download.mjs` separately. The root PDF and logo
-remain the source assets. Only the tracking script and its script tag are added
-to the public page; styles, PDF links and layout are unchanged.
-
-To disable tracking, remove the `download-tracking.js` script tag from
-`index.html` and redeploy. Existing totals stay private in Blobs.
+Netlify uses `netlify.toml` to run tests, build `dist`, and publish the
+function from `netlify/functions/track-download.mjs`. Redeployment of the
+existing linked site is sufficient; no separate account or paid plan required.
+The code retains the exact production-origin restriction to
+`https://averex.netlify.app` and keeps preview traffic uncounted.
