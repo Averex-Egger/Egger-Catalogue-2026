@@ -225,8 +225,8 @@ test("redesign preserves the download button and has valid images and section li
 
 test("build publishes both actual catalogue PDFs", async () => {
   const build = await readFile(new URL("../scripts/build.mjs", import.meta.url), "utf8");
-  assert.match(build, /Averex Catalogue 2026\\.pdf/);
-  assert.match(build, /CLEAF Catalogue\\.pdf/);
+  assert.ok(build.includes("Averex Catalogue 2026.pdf"));
+  assert.ok(build.includes("CLEAF Catalogue.pdf"));
   await access(new URL("../Averex Catalogue 2026.pdf", import.meta.url));
   await access(new URL("../CLEAF Catalogue.pdf", import.meta.url));
 });
