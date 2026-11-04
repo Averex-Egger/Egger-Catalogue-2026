@@ -129,12 +129,12 @@ test("CLEAF increments independently while existing EGGER count is preserved", a
     assert.equal((await handler(request())).status, 204);
   }
   const startedAt = store.read(COUNTER_KEY).startedAt;
-  assert.equal((await handler(request({ body: "download:cleaf" })).status, 204);
-  assert.equal((await handler(request({ body: "download:cleaf" })).status, 204);
+  assert.equal((await handler(request({ body: "download:cleaf" }))).status, 204);
+  assert.equal((await handler(request({ body: "download:cleaf" }))).status, 204);
   assert.equal(store.read(COUNTER_KEY).total, 3);
   assert.equal(store.read(COUNTER_KEY).startedAt, startedAt);
   assert.equal(store.read(CLEAF_COUNTER_KEY).total, 2);
-  assert.equal((await handler(request({ body: "download:egger" })).status, 204);
+  assert.equal((await handler(request({ body: "download:egger" }))).status, 204);
   assert.equal(store.read(COUNTER_KEY).total, 4);
   assert.equal(store.read(CLEAF_COUNTER_KEY).total, 2);
 });
