@@ -1,0 +1,34 @@
+name: Replace Averex catalogue PDF
+on:
+  push:
+    paths:
+      - ".github/workflows/replace-averex-catalogue.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download exact uploaded catalogue and verify integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 3 --max-time 180 -o "Averex Catalogue 2026.pdf" "https://d2ol7oe51mr4n9.cloudfront.net/user_3MBHw0q2TleFwo4ipmeGQyIFnEW/27f7ed37-1ad3-4164-b481-514c958c4f5a.pdf"
+          printf '%s  %s\n' "0ecb2fa8aeed32aa0f96af58524f9d7414965607c1bca7b63bf83289fbb38ac7" "Averex Catalogue 2026.pdf" | sha256sum -c -
+      - name: Replace only the PDF and remove this one-time transfer workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "Averex Catalogue 2026.pdf"
+          git rm -- ".github/workflows/replace-averex-catalogue.yml"
+          git diff --cached --name-only
+          git commit -m "Replace Averex Catalogue 2026 PDF"
+          git push origin HEAD:main
